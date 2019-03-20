@@ -1,0 +1,27 @@
+@import './variables';
+
+body {
+    margin: 0px;
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    opacity: 0.9;
+    background-color: $primary-color;
+    box-shadow: 0px 4px 4px #8888;
+
+    &__title {
+        margin-left: 10px;
+
+        &--white {
+            color: white;
+        }
+    }
+};
+
+.content {
+    background-color: $secondary-color;
+    margin-top: 60px
+}
