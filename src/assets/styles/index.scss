@@ -3,6 +3,7 @@
 body {
     margin: 0px;
     font-family: $font;
+    background-color: $secondary-color;
 }
 
 .header {
@@ -24,14 +25,12 @@ body {
 };
 
 .content {
-    background-color: $secondary-color;
     margin-top: 60px;
 }
 
 .container {
     max-width: 100%;
 	margin: 0 auto;
-    border: 1px solid #ccc;
     
     &__flex {
         display: flex;
@@ -41,16 +40,15 @@ body {
 .item {
     flex: 1;
     margin: 5px;
-	background: $secondary-color;
 	text-align: center;
-	font-size: 1.5em;
+    font-size: 1.5em;
+
 }
 
 .filters {
     padding: 15px;
 
     &__label {
-
 
         &--small {
             font-size: 19px;

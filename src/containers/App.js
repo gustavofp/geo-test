@@ -32,9 +32,9 @@ class App extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.stores.data !== this.props.stores.data) {
-        this.setState({ data: newProps.stores.data });
+      this.setState({ data: newProps.stores.data });
     }
-}
+  }
 
   nameChanged = e => {
     const { data } = this.props.stores;
@@ -64,11 +64,7 @@ class App extends Component {
       <div className="app">
         <Header />
         <Content>
-          <Container>
-            <FlexItem>
-              <Filters nameChanged={this.nameChanged} maskedRevenue={maskedRevenue} revenueChanged={this.revenueChanged} />
-            </FlexItem>
-          </Container>
+          <Filters nameChanged={this.nameChanged} maskedRevenue={maskedRevenue} revenueChanged={this.revenueChanged} />
           <Container>
             <FlexItem>
               <List data={data} minRevenue={revenue} />

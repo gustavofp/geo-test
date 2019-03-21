@@ -10,7 +10,7 @@ class List extends Component {
 
         this.state = {
             page: 0,
-            itemsPerPage: 15,
+            itemsPerPage: 14,
             data: [],
             maxPages: 0
         }
