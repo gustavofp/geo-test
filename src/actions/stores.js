@@ -1,5 +1,5 @@
 import axios from 'axios';
-import constants from '../config/constants';
+import constants from '../shared/constants';
 
 export const STORES_FETCH_STARTED = 'STORES_FETCH_STARTED';
 export const STORES_FETCH_SUCCESS = 'STORES_FETCH_SUCCESS';

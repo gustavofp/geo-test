@@ -8,6 +8,8 @@ import List from '../components/List';
 import Content from '../components/Content';
 import MapContainer from '../components/MapContainer';
 import Filters from '../components/Filters';
+import Container from '../components/Container';
+import FlexItem from '../components/FlexItem';
 
 class App extends Component {
 
@@ -16,10 +18,11 @@ class App extends Component {
 
     this.state = {
       name: null,
-      revenue: null,
+      revenue: 0,
       data: [],
       page: 0,
-      itemsPerPage: 5
+      itemsPerPage: 5,
+      maskedRevenue: "0,00"
     }
   }
 
@@ -27,69 +30,53 @@ class App extends Component {
     this.props.fetchStores();
   }
 
-
-  getDerivedStateFromProps(props, state) {
-    console.log(props);
-    console.log(state);
-    // if (prevProps.stores.data.length !== this.props.stores.data.length) {
-    //   this.setState({ data: this.props.stores.data }, this.paginationChanged(this.state))
-    // }
-  }
-
-  handleNextPage = () => {
-    const { page } = this.state;
-
-    const currentPage = page + 1;
-    this.setState({ page: currentPage }, this.paginationChanged(this.state))
-  }
-
-  handlePreviousPage = () => {
-    const { page } = this.state;
-
-    if (page === 0) return;
-
-    const currentPage = page - 1;
-    this.setState({ page: currentPage }, this.paginationChanged(this.state))
-  }
+  componentWillReceiveProps(newProps) {
+    if (newProps.stores.data !== this.props.stores.data) {
+        this.setState({ data: newProps.stores.data });
+    }
+}
 
   nameChanged = e => {
-    this.setState({ name: e.target.value })
+    const { data } = this.props.stores;
+    const name = e.target.value;
+    this.setState({ name }, this.filterChanged(data, name))
 
-    const { data, name } = this.state;
-    this.filterChanged(data, name);
   }
 
-  revenueChanged = e => {
-    this.setState({ revenue: e.target.value })
+  revenueChanged = (e, maskedValue, floatValue) => {
+    this.setState({ revenue: floatValue, maskedRevenue: maskedValue })
   }
 
   filterChanged = (data, name) => {
     let filteredData = []
 
     if (name) {
-      filteredData = data.filter(e => e.name.includes(name))
+      filteredData = data.filter(e => e.name.toUpperCase().includes(name.toUpperCase()))
     }
 
-    this.setState({ data: filteredData })
+    this.setState({ data: filteredData.length ? filteredData : data })
   };
 
-  paginationChanged = state => {
-    const { page, itemsPerPage, data } = state
-
-    const paginatedData = data.slice(page * itemsPerPage, (page + 1) * itemsPerPage)
-    this.setState({ data: paginatedData })
-  } 
-
   render() {
-    const { revenue, data, page } = this.state;
+    const { revenue, data, maskedRevenue } = this.state;
 
     return (
       <div className="app">
         <Header />
         <Content>
-          <Filters nameChanged={this.nameChanged} revenueChanged={this.revenueChanged} />
-          <List data={data} minRevenue={revenue} page={page} next={this.handleNextPage} previous={this.handlePreviousPage} />
-          <MapContainer data={data} />
+          <Container>
+            <FlexItem>
+              <Filters nameChanged={this.nameChanged} maskedRevenue={maskedRevenue} revenueChanged={this.revenueChanged} />
+            </FlexItem>
+          </Container>
+          <Container>
+            <FlexItem>
+              <List data={data} minRevenue={revenue} />
+            </FlexItem>
+            <FlexItem>
+              <MapContainer data={data} minRevenue={revenue} />
+            </FlexItem>
+          </Container>
         </Content>
       </div>
     );

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Content = props => {
     return ( 
-        <div className="content">
+        <section className="content">
             { props.children }
-        </div>
+        </section>
      );
 }
  
