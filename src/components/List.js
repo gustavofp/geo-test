@@ -32,7 +32,6 @@ class List extends Component {
         const { itemsPerPage, page, maxPages } = this.state;
         const { data } = this.props;
 
-        console.log(maxPages);
         if (page === maxPages) return;
 
         const currentPage = page + 1;
@@ -51,8 +50,6 @@ class List extends Component {
     }
 
     paginationChanged = (page, itemsPerPage, data) => {
-        console.log(`page: ${page}`);
-
         const paginatedData = data.slice(page * itemsPerPage, (page + 1) * itemsPerPage)
 
         this.setState({ data: paginatedData })
